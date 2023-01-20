@@ -1,0 +1,45 @@
+{% extends 'partials/_base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div style="margin-top:10%">
+    <h2>{{user.username}}</h2>
+    <p>{{user.first_name}}</p>
+    <p>{{user.last_name}}</p>
+    {% if user.profile.is_seller %}<h2>Confirmed Seller</h2>{% endif %}
+</div>
+
+{% for favorite in favorites %}
+
+<div>
+    <img src="{{favorite.image.url}}" alt="">
+</div>
+<div>
+    <div>
+        <h2><a href="{% url 'product_detail' favorite.category.slug favorite.id %}" title="">{{favorite.name}}</a></h2>
+    </div>
+    <div>
+        <p>{{favorite.description | truncatechars:140}}</p>
+    </div>
+</div>
+
+{% endfor %}
+
+{% for like in likes %}
+
+<div>
+    <img src="{{like.image.url}}" alt="">
+</div>
+<div>
+    <div>
+        <h2><a href="{% url 'product_detail' like.category.slug like.id %}" title="">{{like.name}}</a></h2>
+    </div>
+    <div>
+        <p>{{like.description | truncatechars:140}}</p>
+    </div>
+</div>
+
+{% endfor %}
+
+{% endblock %}

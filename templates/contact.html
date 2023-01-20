@@ -1,0 +1,57 @@
+{% extends 'partials/_base.html' %}
+{% load static %}
+{% block title %}Contact | Utopia3d{% endblock %}
+
+{% block content %}
+
+<div id="contact" class="contact-div">
+    <div class="container">
+        <div class="contact-title">
+            <h2>Need Help? Sure we are Online!</h2>
+            <p>Let us give you more details about the special offer website you want us. Please fill out the form below. <br>We have million of website owners who happy to work with us!</p>
+        </div><!-- end title -->
+
+        <div>
+            <div>
+
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{message.tags}}">
+                    {{message}}
+                </div>
+                {% endfor %}
+
+                {% endif %}
+
+
+                <div class="contact_form">
+                    <div id="message"></div>
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <div>
+                            <div">
+                                {{form.first_name}}
+                        </div>
+                        <div>
+                            {{form.last_name}}
+                        </div>
+                        <div>
+                            {{form.email}}
+                        </div>
+                        <div>
+                            {{form.phone}}
+                        </div>
+                        <div>
+                            {{form.message}}
+                        </div>
+                        <div>
+                            <button type="submit" class="login-button contact-button">Submit</button>
+                        </div>
+                </div>
+                </form>
+            </div>
+        </div><!-- end col -->
+    </div><!-- end row -->
+</div><!-- end container -->
+</div><!-- end section -->
+{% endblock %}

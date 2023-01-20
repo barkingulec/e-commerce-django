@@ -1,0 +1,85 @@
+﻿{% extends 'partials/_base.html' %}
+{% load static %}
+{% block title %}Models | Utopia3d{% endblock %}
+{% block content %}
+
+<section class="designs-outer">
+    <div class="right-single">
+        <div class="widget-search">
+            <div class="site-search-area">
+                <form method="get" id="site-searchform" action="{% url 'search' %}">
+                    <div>
+                        <input class="input-text form-control" name="search" placeholder="Search keywords..." type="text">
+                        <input id="searchsubmit" value="Search" type="submit">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="widget-categories">
+            <h3 class="widget-title">Categories</h3>
+            <ul>
+                {% for category in categories %}
+                <li class="{% if category.slug in request.path %} current-category {% endif %}"><a href="{% url 'products_by_category' category.slug %}">{{category.name}}</a></li>
+                {% endfor %}
+                {% if user.is_authenticated %}
+                <li class="{% if 'favorite' in request.path %} current-category {% endif %}"><a href="{% url 'products_by_favorite' %}">Favorilerim</a></li>
+                <li class="{% if 'liked' in request.path %} current-category {% endif %}"><a href="{% url 'products_by_liked' %}">Beğendiklerim</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="widget-tags">
+            <h3 class="widget-title">Search Tags</h3>
+            <ul class="tags">
+                {% for tag in tags %}
+                <li><a href="{% url 'products_by_tag' tag.slug %}">{% if tag.slug in request.path %} <b>{{tag.name}}</b>{% else %}{{tag.name}}{% endif %}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="products-outer">
+        <div style="margin-top:11%;">
+            {% if searchedfor %}<p class="gray"><span class="black">{{searchedfor}}</span> araması ile eşleşen <span class="black">{{products.count}}</span> ürün bulundu.</p>{% endif %}
+            {% for category in categories %}{% if category.slug in request.path %}<p class="gray"><span class="black">{{category}}</span> kategorisinde <span class="black">{{products.count}}</span> ürün listelendi.</p>{% endif %}{% endfor %}
+            {% if 'favorite' in request.path %}<p class="gray"><span class="black">Favorilerin</span> kategorisinde <span class="black">{{products.count}}</span> ürün listelendi.</p>{% endif %}
+            {% if 'liked' in request.path %}<p class="gray"><span class="black">Beğendiklerin</span> kategorisinde <span class="black">{{products.count}}</span> ürün listelendi.</p>{% endif %}
+            <h2>All 3d printed models</h2>
+            <div class="order-by-div width100">
+                <form method="get" action="{% url 'order_by_products' %}">
+                    <input type="submit" value="Newest to Oldest" name="Newest to Oldest" class="order-by {% if 'Newest+to+Oldest' in request.build_absolute_uri %}order-by-active{% endif %}" />
+                    <input type="submit" value="Oldest to Newest" name="Oldest to Newest" class="order-by {% if 'Oldest+to+Newest' in request.build_absolute_uri %}order-by-active{% endif %}" />
+                    <input type="submit" value="Highest to Lowest" name="Highest to Lowest" class="order-by {% if 'Highest+to+Lowest' in request.build_absolute_uri %}order-by-active{% endif %}" />
+                    <input type="submit" value="Lowest to Highest" name="Lowest to Highest" class="order-by {% if 'Lowest+to+Highest' in request.build_absolute_uri %}order-by-active{% endif %}" />
+                    <input type="submit" value="Most Liked" name="Most Liked" class="order-by {% if 'Most+Liked' in request.build_absolute_uri %}order-by-active{% endif %}" />
+                    <input type="submit" value="0-30 TL arası" name="prc0to30" class="order-by {% if 'prc0to30' in request.build_absolute_uri %}order-by-active{% endif %}" />
+                </form>
+            </div>
+        </div>
+        <div class="onsale">
+            {% if not products.count %}
+            <p>No product found</p>
+            {% endif %}
+            {% for product in products %}
+            <div class="products-container">
+                <div>
+                    <a class="product-link" href="{% url 'product_detail' product.category.slug product.id %}">
+                        <div class="product-div">
+                            <div class="product-bg"></div>
+                            <img class="product" src="{{product.image.url}}" alt="pic1">
+                            <div class="product-text">
+                                <p class="product-name">
+                                    {{product.name|truncatechars:15}}
+                                </p>
+                                <p class="product-price coral">
+                                    {% if product.price == 0 %}free{% else %}₺ {{product.price}} {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

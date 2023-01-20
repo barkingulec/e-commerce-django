@@ -1,0 +1,45 @@
+{% extends 'partials/_base.html' %}
+{% load static %}
+{% block title %}Add product | Utopia3d{% endblock %}
+{% block content %}
+
+{% if user.is_authenticated and user.profile.is_seller %}
+<div class="add-product-outer box-shadow">
+
+
+    <div>
+        <h2 class="add-product-title">Add Product</h2>
+        {% if form.errors %}
+        {% for field in form %}
+        {% for error in field.errors %}
+        <div>
+            <p>{{error}}</p>
+        </div>
+        {% endfor %}
+        {% endfor %}
+        {% endif %}
+        <div class="add-product-form">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="comment-submit-div" id="comment">
+                    <div class="flex edit-profile-form-el"><p>Name</p>{{form.name}}</div>
+                    <div class="flex edit-profile-form-el"><p>Description</p>{{form.description}}</div>
+                    <div class="flex edit-profile-form-el"><p>Category</p>{{form.category}}</div>
+                    <div class="flex edit-profile-form-el"><p>Image</p>{{form.image}}</div>
+                    <div class="flex edit-profile-form-el"><p>Price</p>{{form.price}}</div>
+                    <div>{{form.seller}}</div>
+                    <div><button class="comment-submit" type="submit">Sell product</button></div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    var name = "{{user.id}}";
+    document.getElementById("elder").value = name;
+
+</script>
+{% endif %}
+
+{% endblock %}

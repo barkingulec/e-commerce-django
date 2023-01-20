@@ -1,0 +1,50 @@
+{% extends 'partials/_base.html' %}
+{% load static %}
+{% block title %}Edit {{obj.name}} | Utopia3d{% endblock %}
+
+{% block content %}
+
+{% if user.is_authenticated and user.profile.is_seller %}
+<div class="add-product-outer box-shadow">
+
+
+    <div>
+        <h2 class="add-product-title">Edit Product</h2>
+        {% if form.errors %}
+        {% for field in form %}
+        {% for error in field.errors %}
+        <div>
+            <p>{{error}}</p>
+        </div>
+        {% endfor %}
+        {% endfor %}
+        {% endif %}
+        <div class="add-product-form">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="comment-submit-div" id="comment">
+                    <div class="flex edit-profile-form-el"><p>Name</p>{{form.name}}</div>
+                    <div class="flex edit-profile-form-el"><p>Description</p>{{form.description}}</div>
+                    <div class="flex edit-profile-form-el"><p>Category</p>{{form.category}}</div>
+                    <div class="flex edit-profile-form-el"><p>Price</p>{{form.price}}</div>
+                    <div class="flex edit-profile-form-el">
+                        <p>Image</p>
+                        <!--{{form.image}}-->
+                        <div class="cur-img">
+                            <img src="{{obj.image.url}}">
+                        </div>
+                    </div>
+                    <div>{{form.seller}}</div>
+                    <input type="hidden" name="category_slug" value="{{product.category.slug}}">
+                    <input type="hidden" name="product_id" value="{{product.id}}">
+                    <div><button class="comment-submit" type="submit">Edit product</button></div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endif %}
+
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'partials/_base.html' %}
+{% load static %}
+{% block title %}Edit Profile | Utopia3d{% endblock %}
+{% block content %}
+
+<header class="mt5p box-shadow edit-profile-header">
+    <div class="header-div">
+        <img class="edit-profile-photo" src="{{profile.image.url}}" />
+        <div class="edit-photo"><p class="edit-text">Edit</p></div>
+    </div>
+</header>
+<div class="edit-profile-div">
+    <div class="flex">
+        <div class="edit-profile-list">
+            <ul>
+                <li><button class="edit-profile-button button-active box-shadow" onclick="location.href='{% url "edit_profile" profile.id profile.username %}'" type="button">Personal Information</button></li>
+                <li><button class="edit-profile-button box-shadow" onclick="location.href='{% url "profile_account" profile.id profile.username %}'" type="button">Account</button></li>
+            </ul>
+        </div>
+        <div class="edit-profile-form-outer">
+            <h2 class="mt5p edit-profile-title">Utopya3d Information</h2>
+            <p>Utopya3d ID: {{profile.username}}</p>
+            <p>Email: {{request.user.email}}</p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

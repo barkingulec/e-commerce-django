@@ -1,0 +1,31 @@
+{% extends 'partials/_base.html' %}
+{% load static %}
+{% block title %}Login | Utopia3d{% endblock %}
+{% block content %}
+
+<div class='login-page'>
+    <form method="POST" class='login'>
+        {% csrf_token %}
+
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{message.tags}}">
+            {{message}}
+        </div>
+        {% endfor %}
+
+        {% endif %}
+
+        <h2 class="login-title">SIGN IN</h2>
+        <div class='input-fields'>
+            {{form.username}}
+            {{form.password}}
+        </div>
+        <div>
+            <button class='login-button'>Sign in</button>
+        </div>
+    </form>
+    <h1 class="seperator"></h1>
+</div>
+
+{% endblock %}

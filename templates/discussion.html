@@ -1,0 +1,62 @@
+{% extends 'partials/_base.html' %}
+{% load static %}
+{% block title %}Forum | Utopia3d{% endblock %}
+
+{% block content %}
+
+<section class="discussion box-shadow">
+    <div class="discuss-nav flex">
+        <form method="get" action="{% url 'discuss_list' %}" class="discuss-order-by">
+            <input type="submit" value="Newest to Oldest" name="newest_to_oldest" class="discuss-button {% if 'newest_to_oldest' in request.build_absolute_uri %}discuss-button-active{% endif %}" />
+            <input type="submit" value="Most Liked" name="most_liked" class="discuss-button {% if 'most_liked' in request.build_absolute_uri %}discuss-button-active{% endif %}" />
+        </form>
+        <button class="new-button" onclick="showHideForm()">New +</button>
+    </div>
+    <div>
+        {% for post in posts %}
+        <div class="single-post flex">
+            <a class="post-image-a" href="{% url 'show_profile_page' post.author.id post.author.username %}"><img src="{{post.author.image.url}}" class="post-image" /></a>
+            <div class="single-discussion">
+                <a href="{% url 'post_detail' post.id post.name %}"><p class="post-name">{{post.name}}</p></a>
+                <p class="post-info"><a href="{% url 'show_profile_page' post.author.id post.author.username %}" class="post-author">{{post.author}}</a> created at: <span>{{post.date | timesince}} ago</span></p>
+            </div>
+            <p class="post-like"><i class="fas fa-chevron-up lightcoral discuss-like"></i>{{total_like_list|get_value_from_dict:post}}</p>
+            <p class="post-view"><i class="far fa-eye lightcoral discuss-view"></i>{{total_like_list|get_value_from_dict:post}}</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+<div id="addPostForm" class="hideShowForm gray1pxtop">
+{% if user.is_authenticated %}
+    
+    <div class="add-post-outer">
+        {% if form.errors %}
+        {% for field in form %}
+        {% for error in field.errors %}
+        <div>
+            <p>{{error}}</p>
+        </div>
+        {% endfor %}
+        {% endfor %}
+        {% endif %}
+        <div class="">
+            <button class="close-button" onclick="hideForm()">Close</button>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="" id="comment">
+                    <div><button class="post-button" type="submit">Post</button></div>
+                    <div class="flex">{{form.name}}</div>
+                    <div class="flex">{{form.description}}</div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% else %}
+<div class="flex">
+    <div class="discuss-announce">Please login first...</div>
+    <button class="close-button-login" onclick="hideForm()">Close</button>
+</div>
+{% endif %}
+</div>
+
+{% endblock %}

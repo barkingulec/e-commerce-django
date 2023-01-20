@@ -1,0 +1,37 @@
+{% extends 'partials/_base.html' %}
+{% load static %}
+{% block title %}Liked Products | Utopia3d{% endblock %}
+{% block content %}
+
+<div class="mt5p"></div>
+<div class="favorite-outer box-shadow">
+    <div class="mb3p"><h2>Liked Products</h2></div>
+    <div class="favorite-div mt3p">
+        {% for like in likes %}
+
+        <div class="fav-img-info box-shadow">
+            <div>
+                <a class="product-link" href="{% url 'product_detail' like.category.slug like.id %}">
+                    <div class="product-div">
+                        <img class="product" src="{{like.image.url}}" alt="pic1">
+                    </div>
+                </a>
+            </div>
+            <div class="fav-info">
+                <div style="margin-left:2%;">
+                    <h2><a href="{% url 'product_detail' like.category.slug like.id %}" title="" class="coral">{{like.name|truncatechars:15}}</a></h2>
+                </div>
+                <form action="{% url 'remove_from_liked' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="user_id" value="{{user.id}}">
+                    <input type="hidden" name="product_id" value="{{like.id}}">
+                    <input type="submit" value="Unlike" class='single-product-button other-button liked-faved liked-button'>
+                </form>
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

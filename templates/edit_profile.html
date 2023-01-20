@@ -1,0 +1,48 @@
+{% extends 'partials/_base.html' %}
+{% load static %}
+{% block title %}Edit Profile | Utopia3d{% endblock %}
+{% block content %}
+
+<header class="mt5p box-shadow edit-profile-header">
+    <div class="header-div">
+        <img class="edit-profile-photo" src="{{obj.image.url}}" />
+        <div class="edit-photo"><p class="edit-text">Edit</p></div>
+    </div>
+</header>
+<div class="edit-profile-div">
+    <div class="flex">
+        <div class="edit-profile-list">
+            <ul>
+                <li><button class="edit-profile-button button-active box-shadow" onclick="location.href='{% url "edit_profile" obj.id obj.username %}'" type="button">Personal Information</button></li>
+                <li><button class="edit-profile-button box-shadow" onclick="location.href='{% url "profile_account" obj.id obj.username %}'" type="button">Account</button></li>
+            </ul>
+        </div>
+        <div class="edit-profile-form-outer">
+            <h2 class="mt5p edit-profile-title">Personal Information</h2>
+            {% if form.errors %}
+            {% for field in form %}
+            {% for error in field.errors %}
+            <div>
+                <p>{{error}}</p>
+            </div>
+            {% endfor %}
+            {% endfor %}
+            {% endif %}
+            <form method="POST">
+                {% csrf_token %}
+                <div class="edit-profile-form-div" id="comment">
+                    <div class="flex edit-profile-form-el"><p>First Name</p>{{form.first_name}}</div>
+                    <div class="flex edit-profile-form-el"><p>Last Name</p>{{form.last_name}}</div>
+                    <div class="flex edit-profile-form-el"><p>Description</p>{{form.description}}</div>
+                    <div class="flex edit-profile-form-el"><p>Facebook</p>{{form.facebook}}</div>
+                    <div class="flex edit-profile-form-el"><p>Instagram</p>{{form.instagram}}</div>
+                    <div class="flex edit-profile-form-el"><p>Twitter</p>{{form.twitter}}</div>
+                    <div class="flex edit-profile-form-el"><p>Youtube</p>{{form.youtube}}</div>
+                    <div><button class="comment-submit" type="submit">Edit Profile</button></div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

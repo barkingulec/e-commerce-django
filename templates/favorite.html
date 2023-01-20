@@ -1,0 +1,39 @@
+{% extends 'partials/_base.html' %}
+{% load static %}
+{% block title %}My Favorites | Utopia3d{% endblock %}
+
+
+{% block content %}
+
+<div class="mt5p"></div>
+<div class="favorite-outer box-shadow">
+    <div class="mb3p"><h2>Favorite Products</h2></div>
+    <div class="favorite-div mt3p">
+        {% for favorite in favorites %}
+
+        <div class="fav-img-info box-shadow">
+            <div>
+                <a class="product-link" href="{% url 'product_detail' favorite.category.slug favorite.id %}">
+                    <div class="product-div">
+                        <img class="product" src="{{favorite.image.url}}" alt="pic1">
+                    </div>
+                </a>
+            </div>
+            <div class="fav-info">
+                <div style="margin-left: 2%;">
+                    <h2><a href="{% url 'product_detail' favorite.category.slug favorite.id %}" title="" class="coral">{{favorite.name|truncatechars:12}}</a></h2>
+                </div>
+                <form action="{% url 'remove_from_favorite' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="user_id" value="{{user.id}}">
+                    <input type="hidden" name="product_id" value="{{favorite.id}}">
+                    <input type="submit" value="Unfavorite" class='single-product-button other-button liked-faved fav-button'>
+                </form>
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

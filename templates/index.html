@@ -1,0 +1,100 @@
+﻿{% extends 'partials/_base.html' %}
+{% load static %}
+{% block title %}Home | Utopia3d{% endblock %}
+
+{% block content %}
+
+<!--<section class="home-section">
+    <h1 class="home-h1">Turkiye'nin ilk ve tek 0 komisyon model alım-satım & forum sitesi</h1>
+    <div>
+        <h1 class="home-join-us">Aramıza Katıl</h1>
+        <div class="flex">
+            <div class="home-products">
+                <img class="home-products-img" src="{% static '../static/images/home-products.png' %}" alt="home-products"/>
+                <p class="home-products-text">satıcılarımız tarafından hazırlanan çeşitli figurleri keşfet.</p>
+            </div>
+            <div class="home-discuss">
+                <img class="home-products-img" src="{% static '../static/images/home-products.png' %}" alt="home-products" />
+                <p class="home-discuss-text">Kullanıcılarla deneyimini paylaşabilir, merak ettiğin sorulara cevap bulabilir veya başkalarına yardımcı olabilirsin.</p>
+            </div>
+        </div>
+    </div>
+</section>-->
+<section class="bg-section">
+    <div>
+        <h1 class="home-h1">UTOPYA3D</h1>
+        <h1 class="home-h1-desc">Turkiye'nin ilk ve tek <span class="home-h1-0">0 komisyon</span> model alım-satım & forum sitesi</h1>
+    </div>
+    <div class="bg"></div>
+    <div class="home-parallax-2">
+        <h1 class="home-join-us">Aramıza Katıl</h1>
+        <div class="flex">
+            <div class="home-products box-shadow">
+                <img class="home-products-img" src="{% static '../static/images/home-products.png' %}" alt="home-products" />
+                <p class="home-products-text">satıcılarımız tarafından hazırlanan çeşitli figurleri keşfet.</p>
+            </div>
+            <div class="home-discuss box-shadow">
+                <img class="home-products-img" src="{% static '../static/images/home-products.png' %}" alt="home-products" />
+                <p class="home-discuss-text">Kullanıcılarla deneyimini paylaşabilir, merak ettiğin sorulara cevap bulabilir veya başkalarına yardımcı olabilirsin.</p>
+            </div>
+        </div>
+    </div>
+    <div class="outer parallax-products">
+        <h2 class="line-title parallax-line-title">Popular Products</h2>
+        <div class="onsale">
+            {% for product in products_by_like %}
+            <div class="products-container">
+                <a class="product-link" href="{% url 'product_detail' product.category.slug product.id %}">
+                    <div class="product-div box-shadow">
+                        <div class="product-bg"></div>
+                        <img class="product" src="{{product.image.url}}" alt="pic1">
+                        <div class="product-text">
+                            <p class="product-name">
+                                {{product.name|truncatechars:15}}
+                            </p>
+                            <p class="product-price coral">
+                                {% if product.price == 0 %}free{% else %}₺ {{product.price}} {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="seeallbutton line-title parallax-line-title">
+            <a href="designs/" class="seeallbtn effect01 box-shadow parallax-seeall"><span>See All</span></a>
+        </div>
+    </div>
+    <div class="bg1"></div>
+    <div class="bg2"></div>
+    <div class="bg3"></div>
+</section>
+<!--<section class="bgc-white mt5p box-shadow">
+    <div class="outer">
+        <h2 class="line-title">Popular Products</h2>
+        <div class="onsale">
+            {% for product in products_by_like %}
+            <div class="products-container">
+                <a class="product-link" href="{% url 'product_detail' product.category.slug product.id %}">
+                    <div class="product-div">
+                        <div class="product-bg"></div>
+                        <img class="product" src="{{product.image.url}}" alt="pic1">
+                        <div class="product-text">
+                            <p class="product-name">
+                                {{product.name|truncatechars:15}}
+                            </p>
+                            <p class="product-price coral">
+                                {% if product.price == 0 %}free{% else %}₺ {{product.price}} {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="seeallbutton line-title">
+            <a href="designs/" class="seeallbtn effect01 box-shadow"><span>See All</span></a>
+        </div>
+    </div>
+</section>-->
+{% endblock %}

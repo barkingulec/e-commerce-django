@@ -1,0 +1,24 @@
+{% extends 'partials/_base.html' %}
+{% load static %}
+{% block title %}Sell | Utopia3d{% endblock %}
+
+{% block content %}
+
+<section class="sell-main">
+    <div class="sell-maker">
+        <h1></h1>
+        <p></p>
+        <div class="box-shadow">
+            <a class="sell-maker-link" href="{% url 'add_product' %}">Model Satisi Ekle</a>
+        </div>
+    </div>
+    <div class="sell-designer">
+        <h1></h1>
+        <p></p>
+        <div class="box-shadow">
+            <a class="sell-designer-link" href="{% url 'add_product' %}">Model Dosyasi Ekle</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

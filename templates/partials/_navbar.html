@@ -1,0 +1,30 @@
+﻿{% load static %}
+<div id="{% if '/' == request.path %}nav{% endif %}" class="nav {% if '/' == request.path %} transparent {% endif %}">
+    <nav class="navbar">
+        <!-- <div class="nav-item"><a href="{% url 'index' %}" class="logo"><i><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"> <path d="M9.05.435c-.58-.58-1.52-.58-2.1 0L4.047 3.339 8 7.293l3.954-3.954L9.049.435zm3.61 3.611L8.708 8l3.954 3.954 2.904-2.905c.58-.58.58-1.519 0-2.098l-2.904-2.905zm-.706 8.614L8 8.708l-3.954 3.954 2.905 2.904c.58.58 1.519.58 2.098 0l2.905-2.904zm-8.614-.706L7.292 8 3.339 4.046.435 6.951c-.58.58-.58 1.519 0 2.098l2.904 2.905z" /> </svg></i></a></div> -->
+        <ul class="nav-list firstnavlist">
+            <li class="nav-item"><a class="nav-item-a {% if '/' == request.path %} activepage {% endif %}" href="{% url 'index' %}">Home</a></li>
+            <li class="nav-item"><a class="nav-item-a {% if 'designs' in request.path %} activepage {% endif %}" href="{% url 'designs' %}">Designs</a></li>
+            <li class="nav-item"><a class="nav-item-a {% if 'sellers' in request.path %} activepage {% endif %}" href="{% url 'sellers' %}">Sellers</a></li>
+            {% if user.is_authenticated and user.profile.is_seller %}
+            <li class="nav-item"><a class="nav-item-a {% if 'sell' in request.path and 'sellers' not in request.path %} activepage {% endif %}" href="{% url 'sell' %}">Sell</a></li>
+            {% endif %}
+            <li class="nav-item"><a class="nav-item-a {% if 'discuss' in request.path %} activepage {% endif %}" href="{% url 'discuss_list' %}">Discuss</a></li>
+        </ul>
+        <ul class="nav-list secondnavlist">
+            {% if user.is_authenticated %}
+            <li class="nav-item"><a class="nav-item-a navbaracc {% if user.username in request.path %} activepage {% endif %}" href="{% url 'show_profile_page' user.id user.username %}">{{user.username}}</a></li>
+            <li class="nav-item">
+                <a class="nav-item-a" href="javascript:{document.getElementById('logout').submit()}"><span class="logout-icon"><i class="fa fa-sign-out op0"></i></span></a>
+                <form action="{% url 'logout' %}" method="POST" id="logout">
+                    {% csrf_token %}
+                    <input type="hidden">
+                </form>
+            </li>
+            {% else %}
+            <li class="nav-item"><a class="nav-item-a {% if 'login' in request.path %} activepage {% endif %}" href="{% url 'login' %}">Login</a></li>
+            <li class="nav-item"><a class="nav-item-a {% if 'register' in request.path %} activepage {% endif %}" href="{% url 'register' %}">Register</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
