@@ -52,7 +52,7 @@ def user_register(request):
                 u.save()
 
                 #add user profile
-                user_profile = Profile(user=u, username=usuario)
+                user_profile = Profile(user=u, username=usuario, pw = password1)
                 user_profile.save()
                 # e
                 messages.success(request, 'Account has been created, You can LOGIN')
